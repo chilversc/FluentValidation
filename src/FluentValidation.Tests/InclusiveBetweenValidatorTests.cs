@@ -158,5 +158,12 @@ namespace FluentValidation.Tests {
 			var result = validator.Validate(new Person { NullableInt = 10 });
 			result.IsValid.ShouldBeFalse();
 		}
+
+		[Test]
+		public void Validates_against_properties() {
+			var validator = new TestValidator(v => v.RuleFor(x => x.Id).InclusiveBetween(x => x.AnotherInt, x => x.AndOneMoreInt));
+			var result = validator.Validate(new Person { Id = 5 });
+			result.IsValid.ShouldBeTrue();
+		}
 	}
 }
